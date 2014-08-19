@@ -5,23 +5,92 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="9"
         android:targetSdkVersion="19" />
+    
+    <!-- Obviously this application uses the camera. This permission is requires as we are not going to use an intent to do so -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- This way, only devices that can take photos will be able to install it -->
+    <uses-feature android:name="android.hardware.camera" />
+    <!-- To save the photos to the sd card or internal memory -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- For recording sound on the video record function -->    
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- To Geo-tag the photos -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    
 
-    <application
+	<application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/speech_to_clipboard_350x350"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
+		<!-- First is the splash screen -->
         <activity
-            android:name="com.pgmacdesign.silentcamerawidget.MainActivity2"
+            android:name="com.pgmacdesign.speechtotextclipboardwidget.Splash"
             android:label="@string/app_name" >
+            
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            
         </activity>
+        
+        
+        <!-- Second activity, which is the main menu -->
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name" >
+ 
+        </activity>
+        
+        
+        <!-- This activity is for shared preferences-->
+        <activity       
+            android:name=".SharedPrefs"
+            android:label="SharedPrefs"  >
+  
+        </activity>
+        
+        <!-- Widget class  -->
+		<receiver 
+			android:name=".MyWidget1"
+			android:label="Speech to Clipboard" 
+			>
+			<intent-filter>
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+			</intent-filter>
+			<meta-data 
+				android:name="android.appwidget.provider"
+				android:resource="@xml/widget_stuff" />    
+		</receiver>
+		
+		<!-- This activity configures the widget -->
+		<activity
+			android:name=".WidgetConfig"
+			android:label="Widget Configuration" >
+			<intent-filter>
+				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"
+					/>
+			</intent-filter>
+		</activity>        
+            
+        
+        <!-- This activity is for shared preferences-->
+        <activity       
+            android:name=".SpeechToText"
+            android:label="Speech to Text"  
+            android:theme="@style/Theme.Transparent"
+            >
+  
+        </activity>		
+
+		
+		
+		
     </application>
+
 
 </manifest>
