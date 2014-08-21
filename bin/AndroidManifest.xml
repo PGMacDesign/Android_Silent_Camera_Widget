@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="9"
+        android:minSdkVersion="14"
         android:targetSdkVersion="19" />
     
     <!-- Obviously this application uses the camera. This permission is requires as we are not going to use an intent to do so -->
@@ -22,7 +22,7 @@
 
 	<application
         android:allowBackup="true"
-        android:icon="@drawable/speech_to_clipboard_350x350"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         
@@ -42,7 +42,12 @@
         <!-- Second activity, which is the main menu -->
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:uiOptions="splitActionBarWhenNarrow"
+            >
+            <!-- The (android:uiOptions="splitActionBarWhenNarrow") is used to move the options bar to the bottom of the screen if there is limited room 
+            Reference: http://www.sitepoint.com/better-user-interfaces-android-action-bar/ 
+            for more info -->
  
         </activity>
         
@@ -87,6 +92,14 @@
   
         </activity>		
 
+	  	<activity
+		    android:name="com.pgmacdesign.silentcamerawidget.SecondActivity"
+		    android:label="@string/second_activity_title"
+		    android:parentActivityName="com.pgmacdesign.silentcamerawidget.MainActivity" >
+		    <meta-data
+		      	android:name="android.support.PARENT_ACTIVITY"
+		      	android:value="com.example.actionbar.MainActivity" />
+	  	</activity>
 		
 		
 		

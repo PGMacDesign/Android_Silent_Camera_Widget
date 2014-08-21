@@ -16,6 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 package com.pgmacdesign.silentcamerawidget;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -26,6 +27,9 @@ import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MotionEvent;
 import android.view.View;
 
 public class MainActivity extends Activity implements View.OnClickListener {
@@ -116,4 +120,39 @@ public class MainActivity extends Activity implements View.OnClickListener {
 	    return c; // returns null if camera is unavailable
 	}
 
+	//To be used for the menu bar
+	public boolean onCreateOptionsMenu(Menu menu) {
+	  MenuInflater inflater = getMenuInflater();
+	 
+	  inflater.inflate(R.menu.action_bar_main, menu);
+	  return super.onCreateOptionsMenu(menu);
+	}
+	
+	//Temp purposes, to handle the button in the main activity
+	public void openSecondActivity(View view) {
+		  Intent intent = new Intent(this, SecondActivity.class);
+		  startActivity(intent);
+		}
+	
+	
+	//The following 2 classes (onTouchEvent and toggleActionBar are so that the menu will be hidden unless they click the screen (IE Gallery)
+	public boolean onTouchEvent(MotionEvent event) {
+	  if(event.getAction() == MotionEvent.ACTION_DOWN) {
+	    toggleActionBar();
+	  }
+	  return true;
+	}
+	 
+	private void toggleActionBar() {
+	  ActionBar actionBar = getActionBar();
+	 
+	  if(actionBar != null) {
+	    if(actionBar.isShowing()) {
+	      actionBar.hide();
+	    }
+	    else {
+	      actionBar.show();
+	    }
+	  }
+	}
 }

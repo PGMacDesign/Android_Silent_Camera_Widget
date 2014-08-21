@@ -14,7 +14,18 @@
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:windowActionBarOverlay">true</item>
     </style>
 
+    <!-- Transparent theme -->
+    <style name="Theme.Transparent" parent="android:Theme">
+	    <item name="android:windowIsTranslucent">true</item>
+	    <item name="android:windowBackground">@android:color/transparent</item>
+	    <item name="android:windowContentOverlay">@null</item>
+	    <item name="android:windowNoTitle">true</item>
+	    <item name="android:windowIsFloating">true</item>
+	    <item name="android:backgroundDimEnabled">false</item>
+  	</style>
+
+  
 </resources>

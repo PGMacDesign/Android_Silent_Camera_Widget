@@ -8,6 +8,14 @@
     tools:ignore="MergeRootFrame" >
 
 
+    <Button
+	  android:id="@+id/second"
+	  android:layout_width="fill_parent"
+	  android:layout_height="wrap_content"
+	  android:layout_alignLeft="@+id/TextView1"
+	  android:layout_centerVertical="true"
+	  android:onClick="openSecondActivity"
+	  android:text="@string/second" />
 
 </FrameLayout>
 

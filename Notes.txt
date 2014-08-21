@@ -1,0 +1,3 @@
+The idea of this application originated via friends at work.
+The application at this URL: https://play.google.com/store/apps/details?id=mobi.workaholic.camerawidget, 
+does a good job, but I want to improve upon that. 

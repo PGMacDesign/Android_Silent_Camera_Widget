@@ -10,9 +10,18 @@
 				style="?android:attr/buttonStyleSmall"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:background="@drawable/speech_icon_red"
+				android:background="@drawable/ic_launcher"
                	android:focusable="true"
 				android:text="Button" />
 
 
+			<!-- Need to fix the image button here -->
+			
+			
+			
+			
+			
+			
+			
+			
 		</LinearLayout>
