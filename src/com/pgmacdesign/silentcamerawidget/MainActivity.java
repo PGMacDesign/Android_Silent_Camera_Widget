@@ -18,19 +18,18 @@ package com.pgmacdesign.silentcamerawidget;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 	
@@ -134,6 +133,33 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		  startActivity(intent);
 		}
 	
+	//If the options are clicked
+	public boolean onOptionsItemSelected(MenuItem item) {
+		  // Handle presses on the action bar items
+		  switch (item.getItemId()) {
+		    case R.id.action_search:
+		      // Code you want run when activity is clicked
+		      Toast.makeText(this, "Search clicked", Toast.LENGTH_SHORT).show();
+		      return true;
+		    case R.id.action_record:
+		      Toast.makeText(this, "Record clicked", Toast.LENGTH_SHORT).show();
+		      return true;
+		    case R.id.action_save:
+		      Toast.makeText(this, "Save clicked", Toast.LENGTH_SHORT).show();
+		      return true;
+		    case R.id.action_label:
+		      Toast.makeText(this, "Label clicked", Toast.LENGTH_SHORT).show();
+		      return true;
+		    case R.id.action_play:
+		      Toast.makeText(this, "Play clicked", Toast.LENGTH_SHORT).show();
+		      return true;
+		    case R.id.action_settings:
+		      Toast.makeText(this, "Settings clicked", Toast.LENGTH_SHORT).show();
+		      return true;
+		    default:
+		      return super.onOptionsItemSelected(item);
+		  }
+		}
 	
 	//The following 2 classes (onTouchEvent and toggleActionBar are so that the menu will be hidden unless they click the screen (IE Gallery)
 	public boolean onTouchEvent(MotionEvent event) {
@@ -142,7 +168,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 	  }
 	  return true;
 	}
-	 
+	//Linked to above
 	private void toggleActionBar() {
 	  ActionBar actionBar = getActionBar();
 	 

@@ -3,28 +3,41 @@
     
 
   <item android:id="@+id/action_search"
-    android:icon="@drawable/ic_action_search"
-    android:title="@string/action_search"
-    android:showAsAction="ifRoom" />
+	  android:icon="@drawable/ic_action_search"
+	  android:title="@string/action_search"
+	  android:showAsAction="ifRoom|collapseActionView"
+	  android:actionViewClass="android.widget.SearchView" />
+  <!-- Edited above item (search) to expand out when the search button is clicked to allow typing -->
+  
   <item android:id="@+id/action_record"
     android:icon="@drawable/ic_action_video"
     android:title="@string/action_take_picture"
     android:showAsAction="ifRoom" />
+  
   <item android:id="@+id/action_save"
     android:icon="@drawable/ic_action_save"
     android:title="@string/action_save"
     android:showAsAction="ifRoom" />
+  
   <item android:id="@+id/action_label"
     android:icon="@drawable/ic_action_new_label"
     android:title="@string/action_label"
     android:showAsAction="ifRoom" />
+  
   <item android:id="@+id/action_play"
     android:icon="@drawable/ic_action_play"
     android:title="@string/action_play"
     android:showAsAction="ifRoom" />
+  
   <item android:id="@+id/action_settings"
     android:title="@string/action_settings"
     android:showAsAction="never" />
+  
+  <item android:id="@+id/my_action"
+	android:icon="@drawable/ic_action_edit"
+	android:title="My Action"
+	android:showAsAction="ifRoom|collapseActionView"
+	android:actionLayout="@layout/custom_view_for_layout" />
 
 
     

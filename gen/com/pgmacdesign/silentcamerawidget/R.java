@@ -182,40 +182,45 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_action_camera=0x7f020000;
-        public static final int ic_action_labels=0x7f020001;
-        public static final int ic_action_new_label=0x7f020002;
-        public static final int ic_action_play=0x7f020003;
-        public static final int ic_action_save=0x7f020004;
-        public static final int ic_action_search=0x7f020005;
-        public static final int ic_action_video=0x7f020006;
-        public static final int ic_launcher=0x7f020007;
-        public static final int pgmacdesign_logo_silver_square=0x7f020008;
-        public static final int pgmacdesign_logo_silver_square_trimmed=0x7f020009;
-        public static final int pgmacdesign_logo_silver_square_trimmed_red=0x7f02000a;
+        public static final int ic_action_edit=0x7f020001;
+        public static final int ic_action_labels=0x7f020002;
+        public static final int ic_action_new_label=0x7f020003;
+        public static final int ic_action_play=0x7f020004;
+        public static final int ic_action_save=0x7f020005;
+        public static final int ic_action_search=0x7f020006;
+        public static final int ic_action_video=0x7f020007;
+        public static final int ic_launcher=0x7f020008;
+        public static final int pgmacdesign_logo_silver_square=0x7f020009;
+        public static final int pgmacdesign_logo_silver_square_trimmed=0x7f02000a;
+        public static final int pgmacdesign_logo_silver_square_trimmed_red=0x7f02000b;
     }
     public static final class id {
-        public static final int RelativeLayout1=0x7f0b0003;
+        public static final int RelativeLayout1=0x7f0b0005;
         public static final int TextView1=0x7f0b0002;
-        public static final int action_label=0x7f0b000c;
-        public static final int action_play=0x7f0b000d;
-        public static final int action_record=0x7f0b000a;
-        public static final int action_save=0x7f0b000b;
-        public static final int action_search=0x7f0b0009;
-        public static final int action_settings=0x7f0b000e;
-        public static final int button_widget_config=0x7f0b0008;
-        public static final int button_widget_open=0x7f0b0005;
+        public static final int action_label=0x7f0b000e;
+        public static final int action_play=0x7f0b000f;
+        public static final int action_record=0x7f0b000c;
+        public static final int action_save=0x7f0b000d;
+        public static final int action_search=0x7f0b000b;
+        public static final int action_settings=0x7f0b0010;
+        public static final int button_widget_config=0x7f0b000a;
+        public static final int button_widget_open=0x7f0b0007;
         public static final int container=0x7f0b0000;
-        public static final int edit_text_widget_config=0x7f0b0007;
-        public static final int imageView1=0x7f0b0004;
+        public static final int edit_text_widget_config=0x7f0b0009;
+        public static final int imageView1=0x7f0b0006;
+        public static final int myActionEditText=0x7f0b0004;
+        public static final int myActionTextView=0x7f0b0003;
+        public static final int my_action=0x7f0b0011;
         public static final int second=0x7f0b0001;
-        public static final int textView1=0x7f0b0006;
+        public static final int textView1=0x7f0b0008;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
-        public static final int second_activity=0x7f030001;
-        public static final int splash=0x7f030002;
-        public static final int widget=0x7f030003;
-        public static final int widget_config=0x7f030004;
+        public static final int custom_view_for_layout=0x7f030001;
+        public static final int second_activity=0x7f030002;
+        public static final int splash=0x7f030003;
+        public static final int widget=0x7f030004;
+        public static final int widget_config=0x7f030005;
     }
     public static final class menu {
         public static final int action_bar_main=0x7f0a0000;

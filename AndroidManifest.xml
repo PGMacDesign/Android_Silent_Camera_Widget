@@ -28,7 +28,7 @@
         
 		<!-- First is the splash screen -->
         <activity
-            android:name="com.pgmacdesign.speechtotextclipboardwidget.Splash"
+            android:name="com.pgmacdesign.silentcamerawidget.Splash"
             android:label="@string/app_name" >
             
             <intent-filter>
@@ -62,7 +62,7 @@
         <!-- Widget class  -->
 		<receiver 
 			android:name=".MyWidget1"
-			android:label="Speech to Clipboard" 
+			android:label="My Widget 1" 
 			>
 			<intent-filter>
 				<action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
@@ -85,8 +85,8 @@
         
         <!-- This activity is for shared preferences-->
         <activity       
-            android:name=".SpeechToText"
-            android:label="Speech to Text"  
+            android:name=".MainActivity2"
+            android:label="Main Activity 2"  
             android:theme="@style/Theme.Transparent"
             >
   
