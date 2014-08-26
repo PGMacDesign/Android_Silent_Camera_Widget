@@ -227,7 +227,8 @@ public final class R {
         public static final int second_activity_bar=0x7f0a0001;
     }
     public static final class raw {
-        public static final int cinematic_impact=0x7f050000;
+        public static final int aww_sound_effect=0x7f050000;
+        public static final int cinematic_impact=0x7f050001;
     }
     public static final class string {
         public static final int action_label=0x7f080006;

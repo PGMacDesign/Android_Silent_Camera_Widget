@@ -78,15 +78,15 @@ public class WidgetConfig extends Activity {
 		RemoteViews v1 = new RemoteViews(c.getPackageName(), R.layout.widget);
 
 		//This intent opens a class when clicked. Again, note C for context
-		///////////////////////////////////////Intent intent = new Intent(c, SpeechToText.class); //Removed from inner parameter parentheses: (c, SpeechToText.class)
+		Intent intent = new Intent(c, TakePhoto.class); //Removed from inner parameter parentheses: (c, TakePhoto.class)
 
 		
 		//A pending intent is also needed. Again, note the C for context
-		///////////////////////////////////////PendingIntent pendingIntent = PendingIntent.getActivity(c, 0, intent, 0);
+		PendingIntent pendingIntent = PendingIntent.getActivity(c, 0, intent, 0);
 
 		
 		//If you have a button within the widget icon, link it to an ID here
-		///////////////////////////////////////v1.setOnClickPendingIntent(R.id.button_widget_open, pendingIntent);	
+		v1.setOnClickPendingIntent(R.id.button_widget_open, pendingIntent);	
 		
 		//Update the widget with the remote view
 		awm.updateAppWidget(awID, v1);
