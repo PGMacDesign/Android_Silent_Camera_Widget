@@ -19,7 +19,7 @@ public class MakePhotoActivity extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
 
-		// do we have a camera?
+		// Check if we have a camera?
 		if (!getPackageManager()
 				.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
 			Toast.makeText(this, "No camera on this device", Toast.LENGTH_LONG)
