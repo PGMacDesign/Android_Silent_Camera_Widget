@@ -204,7 +204,7 @@ public final class R {
         public static final int action_search=0x7f0b000b;
         public static final int action_settings=0x7f0b0010;
         public static final int button_widget_config=0x7f0b000a;
-        public static final int button_widget_open=0x7f0b0007;
+        public static final int button_widget_take_photo=0x7f0b0007;
         public static final int container=0x7f0b0000;
         public static final int edit_text_widget_config=0x7f0b0009;
         public static final int imageView1=0x7f0b0006;

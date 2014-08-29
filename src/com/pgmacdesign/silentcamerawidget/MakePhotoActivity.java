@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+//THIS SHOULD NOT BE GETTING CALLED, USING AS EX CODE
 public class MakePhotoActivity extends Activity {
   private final static String DEBUG_TAG = "MakePhotoActivity";
   private Camera camera;
@@ -17,7 +18,7 @@ public class MakePhotoActivity extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
+    setContentView(R.layout.activity_main);
 
 		// Check if we have a camera?
 		if (!getPackageManager()

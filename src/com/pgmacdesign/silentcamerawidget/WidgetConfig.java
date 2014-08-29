@@ -16,8 +16,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 package com.pgmacdesign.silentcamerawidget;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -25,17 +23,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.RemoteViews;
 
+//This class configures the widget while it is being placed on the home screen
 public class WidgetConfig extends Activity {
 	
 	//Define these as global variables
 	int awID;
 	AppWidgetManager awm;
 	Context c;
-	ImageButton speechButton;
+	ImageButton cameraButton;
 	
 	static final int check = 1111;
 	
@@ -59,10 +57,11 @@ public class WidgetConfig extends Activity {
 			//This returns 1 App widget ID
 		} else {
 			//In case something gets a-broken!
+			L.m("Error on line 63");
 			finish();
 		}
 		
-		speechButton = (ImageButton) findViewById(R.id.button_widget_open);
+		cameraButton = (ImageButton) findViewById(R.id.button_widget_take_photo);
 		
 		awm = AppWidgetManager.getInstance(c); 	
 		
@@ -77,7 +76,7 @@ public class WidgetConfig extends Activity {
 		//Setup a remoteview referring to the context and relating to the widget
 		RemoteViews v1 = new RemoteViews(c.getPackageName(), R.layout.widget);
 
-		//This intent opens a class when clicked. Again, note C for context
+		//This intent opens the takephoto class when clicked. Again, note C for context
 		Intent intent = new Intent(c, TakePhoto.class); //Removed from inner parameter parentheses: (c, TakePhoto.class)
 
 		
@@ -86,25 +85,22 @@ public class WidgetConfig extends Activity {
 
 		
 		//If you have a button within the widget icon, link it to an ID here
-		v1.setOnClickPendingIntent(R.id.button_widget_open, pendingIntent);	
+		v1.setOnClickPendingIntent(R.id.button_widget_take_photo, pendingIntent);	
 		
 		//Update the widget with the remote view
 		awm.updateAppWidget(awID, v1);
 		
-		//Lastly, need to set a result
-		Intent voiceIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-		
-		//Updating for voice intents
-		voiceIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-		voiceIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speech recognition demo");
-		voiceIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		////////////////////////////////////////voiceIntent.putExtra(RecognizerIntent.EXTRA_RESULTS_PENDINGINTENT, pendingIntent);
-		
-		//Updating the ID that is being called
-		voiceIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, awID);
+		Intent cameraIntent = new Intent();
 
-		
-		setResult(RESULT_OK, voiceIntent);
+				
+		//Updating the ID that is being called
+		cameraIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		cameraIntent.putExtra(RecognizerIntent.EXTRA_RESULTS_PENDINGINTENT, pendingIntent);
+		cameraIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, awID);
+
+
+		setResult(RESULT_OK, cameraIntent);
+							
 		
 
 		//We want this to finish. Might be smart to include this when the button is clicked so that the user can choose when to end it
@@ -112,23 +108,6 @@ public class WidgetConfig extends Activity {
 		
 	}
 	
-	protected void onActivityResult1(int requestCode, int resultCode, Intent data) {
 
-		if (requestCode == check && resultCode == RESULT_OK){
-			
-			//Fill the list view. Collect data from activity result
-			ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-			//No adapter has been made, make it here
-			
-			String uberString = "";
-			
-			for (int i = 0; i< results.size(); i++){
-				uberString = uberString + results.get(i).toString();
-			}
-			
-		}
-		
-		super.onActivityResult(requestCode, resultCode, data);
-	}
 	
 }

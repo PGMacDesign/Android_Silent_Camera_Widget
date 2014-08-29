@@ -6,7 +6,7 @@
 
 
 			<ImageButton
-				android:id="@+id/button_widget_open"
+				android:id="@+id/button_widget_take_photo"
 				style="?android:attr/buttonStyleSmall"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"

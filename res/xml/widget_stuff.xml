@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider 
 	xmlns:android="http://schemas.android.com/apk/res/android" 
-	android:configure="com.pgmacdesign.speechtotextclipboardwidget.WidgetConfig" 
+	android:configure="com.pgmacdesign.silentcamerawidget.WidgetConfig" 
 	android:minWidth="40dp" 
 	android:minResizeHeight="40dp" 
 	android:minHeight="40dp" 
@@ -9,5 +9,10 @@
 	android:updatePeriodMillis="1800000"
 	android:resizeMode="horizontal|vertical">
    <!-- 1,800,000 milliseconds is a 1/2 hour. Updates every 0.5 hours --> 
+   
+   <!-- 
+   android:configure="com.pgmacdesign.silentcamerawidget.WidgetConfig"
+    -->
+    
 </appwidget-provider>
 	  

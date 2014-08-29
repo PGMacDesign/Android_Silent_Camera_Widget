@@ -21,11 +21,50 @@ public class TakePhoto extends Activity {
 	    takeThePhotoPlease();
 	}
 
+	//This method calls other respective methods to take the photo
 	private void takeThePhotoPlease() {
-		checkIfCameraExists();
+		checkIfCameraExists(); //Check first
+		silenceTheWorld(); //Turn media sounds on silent so that the camera will make no noise
+		actuallyActivateCamera(); //Actually take the photo
+		restoreSound(); //Turns volume back up
 		
 	}
 
+	//Turn media sounds on silent so that the camera will make no noise
+	private void restoreSound() {
+		
+	}
+
+	//Actually take the photo
+	private void actuallyActivateCamera() {
+	    camera.takePicture(null, null,
+		        new PhotoHandler(getApplicationContext())); //Calls the PhotoHandler class here
+	}
+
+	//Confirm front or back facing camera
+  	private int findFrontFacingCamera() {
+  		int cameraId = -1;
+  		
+  		//Search for the front facing camera
+  		int numberOfCameras = Camera.getNumberOfCameras();
+  		for (int i = 0; i < numberOfCameras; i++) {
+  			CameraInfo info = new CameraInfo();
+  			Camera.getCameraInfo(i, info);
+  			if (info.facing == CameraInfo.CAMERA_FACING_FRONT) {
+  				Log.d(DEBUG_TAG, "Camera found");
+  				cameraId = i;
+  				break;
+  			}
+  		}
+  		return cameraId;
+  	}
+  	
+	//Turns volume back up
+	private void silenceTheWorld() {
+		
+	}
+
+	//Checks to see if the camera exists on the phone
 	private void checkIfCameraExists() {
 
 		// do we have a camera?
@@ -44,29 +83,7 @@ public class TakePhoto extends Activity {
 		}
 	}
 	
-	
-	//NEED TO MOVE THIS INTO AN ACTION THAT HAPPENS WHEN THE WIDGET IS CLICKED
-	public void onClick(View view) {
-	    camera.takePicture(null, null,
-	        new PhotoHandler(getApplicationContext()));
-	  }
 
-	  private int findFrontFacingCamera() {
-	    int cameraId = -1;
-	    // Search for the front facing camera
-	    int numberOfCameras = Camera.getNumberOfCameras();
-	    for (int i = 0; i < numberOfCameras; i++) {
-	      CameraInfo info = new CameraInfo();
-	      Camera.getCameraInfo(i, info);
-	      if (info.facing == CameraInfo.CAMERA_FACING_FRONT) {
-	        Log.d(DEBUG_TAG, "Camera found");
-	        cameraId = i;
-	        break;
-	      }
-	    }
-	    return cameraId;
-	  }
-	
 	
 	
 }

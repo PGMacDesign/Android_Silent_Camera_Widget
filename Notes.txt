@@ -1,3 +1,25 @@
 The idea of this application originated via friends at work.
 The application at this URL: https://play.google.com/store/apps/details?id=mobi.workaholic.camerawidget, 
 does a good job, but I want to improve upon that. 
+
+To Do:
+1) Get Widget placement and clicking working
+2) Take photo with widget
+3) Turn down volume while taking photo
+4) Save photo to SD card or other memory
+5) Use highest quality resolution
+6) Create good looking icon
+7) Add widget removed code
+
+
+
+
+
+
+
+
+
+
+
+
+Done With:

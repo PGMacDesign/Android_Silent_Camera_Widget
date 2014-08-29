@@ -59,10 +59,12 @@
   
         </activity>
         
+
+		
         <!-- Widget class  -->
 		<receiver 
 			android:name=".MyWidget1"
-			android:label="My Widget 1" 
+			android:label="Silent Camera" 
 			>
 			<intent-filter>
 				<action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
@@ -82,8 +84,12 @@
 			</intent-filter>
 		</activity>        
             
+		
+		
+		
+		
         
-        <!-- This activity is for shared preferences-->
+        <!-- This activity is for -->
         <activity       
             android:name=".MainActivity2"
             android:label="Main Activity 2"  
