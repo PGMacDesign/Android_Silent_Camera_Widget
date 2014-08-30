@@ -90,7 +90,7 @@ public class WidgetConfig extends Activity {
 		//Update the widget with the remote view
 		awm.updateAppWidget(awID, v1);
 		
-		Intent cameraIntent = new Intent();
+		Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 
 				
 		//Updating the ID that is being called
