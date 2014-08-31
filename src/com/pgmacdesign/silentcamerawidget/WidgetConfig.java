@@ -91,7 +91,12 @@ public class WidgetConfig extends Activity {
 		awm.updateAppWidget(awID, v1);
 		
 		Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-
+		//NEED TO ALTER above line to confirm it will pass in data. Also may need to use:
+		
+		/*
+		 Notes from:
+		 http://wptrafficanalyzer.in/blog/android-app-widget-with-configuration-activity/		 
+		 */
 				
 		//Updating the ID that is being called
 		cameraIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
