@@ -95,7 +95,8 @@ public class WidgetConfig extends Activity {
 		
 		/*
 		 Notes from:
-		 http://wptrafficanalyzer.in/blog/android-app-widget-with-configuration-activity/		 
+		 http://wptrafficanalyzer.in/blog/android-app-widget-with-configuration-activity/	
+		 //	 
 		 */
 				
 		//Updating the ID that is being called
