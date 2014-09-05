@@ -12,7 +12,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
-//This class saves data to the memory card
+//This class saves data to the memory card, need to have specified folder created 
 public class PhotoHandler implements PictureCallback {
 
 	private final static String DEBUG_TAG = "PhotoHandler Activity";
