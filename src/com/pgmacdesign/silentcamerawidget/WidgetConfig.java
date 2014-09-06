@@ -16,6 +16,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 package com.pgmacdesign.silentcamerawidget;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -115,5 +117,25 @@ public class WidgetConfig extends Activity {
 	}
 	
 
+	//Passing data in via start result. 
+	//pull from speech to clipboard app code
+	protected void onActivityResult1(int requestCode, int resultCode, Intent data) {
+
+		if (requestCode == check && resultCode == RESULT_OK){
+			
+			//Fill the list view. Collect data from activity result
+			ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+			//No adapter has been made, make it here
+			
+			String uberString = "";
+			
+			for (int i = 0; i< results.size(); i++){
+				uberString = uberString + results.get(i).toString();
+			}
+			
+		}
+		
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 	
 }
