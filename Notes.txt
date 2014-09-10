@@ -9,7 +9,7 @@ To Do:
 4) Save photo to SD card or other memory
 5) Use highest quality resolution
 6) Create good looking icon
-7) Add widget removed code
+7) DONE
 
 
 
