@@ -17,16 +17,21 @@ public class TakePhoto extends Activity {
 	
 	
 	public void onCreate(Bundle savedInstanceState) {
-	    super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);
+		L.m("Testing Line 21");
 	    takeThePhotoPlease();
 	}
 
 	//This method calls other respective methods to take the photo
 	private void takeThePhotoPlease() {
 		checkIfCameraExists(); //Check first
+		L.m("Testing Line 28");
 		silenceTheWorld(); //Turn media sounds on silent so that the camera will make no noise
+		L.m("Testing Line 30");
 		actuallyActivateCamera(); //Actually take the photo
+		L.m("Testing Line 32");
 		restoreSound(); //Turns volume back up
+		L.m("Testing Line 34");
 		
 	}
 

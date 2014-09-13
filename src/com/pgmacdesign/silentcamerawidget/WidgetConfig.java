@@ -109,7 +109,7 @@ public class WidgetConfig extends Activity {
 
 		setResult(RESULT_OK, cameraIntent);
 							
-		
+		L.m("Line 112 Works"); //nope :(
 
 		//We want this to finish. Might be smart to include this when the button is clicked so that the user can choose when to end it
 		finish();
