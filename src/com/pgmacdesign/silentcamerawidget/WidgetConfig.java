@@ -127,12 +127,7 @@ public class WidgetConfig extends Activity {
 			ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 			//No adapter has been made, make it here
 			
-			String uberString = "";
-			
-			for (int i = 0; i< results.size(); i++){
-				uberString = uberString + results.get(i).toString();
-			}
-			
+			L.m("Line 130 Works"); //nope :(
 		}
 		
 		super.onActivityResult(requestCode, resultCode, data);
