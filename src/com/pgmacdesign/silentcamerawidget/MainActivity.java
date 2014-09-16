@@ -62,8 +62,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		//Developer.android.com recommends using a try catch for this
 		try{
 			Camera.open();
+			L.m("Line 65 Works");
 		} catch (Exception e){
 			e.printStackTrace();
+			L.m("Line 68 Works");
 		}
 		
 	}
