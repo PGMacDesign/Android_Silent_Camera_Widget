@@ -80,10 +80,12 @@ public class WidgetConfig extends Activity {
 
 		//This intent opens the takephoto class when clicked. Again, note C for context
 		Intent intent = new Intent(c, TakePhoto.class); //Removed from inner parameter parentheses: (c, TakePhoto.class)
+		Intent intent_testing = new Intent(c, TakePhoto.class);
 
 		
 		//A pending intent is also needed. Again, note the C for context
 		PendingIntent pendingIntent = PendingIntent.getActivity(c, 0, intent, 0);
+		PendingIntent pendingIntent_testing = PendingIntent.getActivity(c, 0, intent_testing, 0);
 
 		
 		//If you have a button within the widget icon, link it to an ID here
