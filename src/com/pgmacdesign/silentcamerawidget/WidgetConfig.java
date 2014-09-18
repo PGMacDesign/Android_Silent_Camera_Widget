@@ -79,13 +79,13 @@ public class WidgetConfig extends Activity {
 		RemoteViews v1 = new RemoteViews(c.getPackageName(), R.layout.widget);
 
 		//This intent opens the takephoto class when clicked. Again, note C for context
-		Intent intent = new Intent(c, TakePhoto.class); //Removed from inner parameter parentheses: (c, TakePhoto.class)
-		Intent intent_testing = new Intent(c, TakePhoto.class);
+		Intent intent = new Intent(c, com.pgmacdesign.silentcamerawidget.TEST.class); //Removed from inner parameter parentheses: (c, TakePhoto.class)
+		//Intent intent_testing = new Intent(c, TakePhoto.class);
 
 		
 		//A pending intent is also needed. Again, note the C for context
 		PendingIntent pendingIntent = PendingIntent.getActivity(c, 0, intent, 0);
-		PendingIntent pendingIntent_testing = PendingIntent.getActivity(c, 0, intent_testing, 0);
+		//PendingIntent pendingIntent_testing = PendingIntent.getActivity(c, 0, intent_testing, 0);
 
 		
 		//If you have a button within the widget icon, link it to an ID here
@@ -96,22 +96,10 @@ public class WidgetConfig extends Activity {
 		
 		
 		//Lastly, need to set a result
-				Intent voiceIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-				
-				//Updating for voice intents
-				voiceIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-				voiceIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speech recognition demo");
-				voiceIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				voiceIntent.putExtra(RecognizerIntent.EXTRA_RESULTS_PENDINGINTENT, pendingIntent);
-				
-				//Updating the ID that is being called
-				voiceIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, awID);
 
 				
-				setResult(RESULT_OK, voiceIntent);
-				
 		
-		/* TESTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! - Indent 3
+
 					Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 					//NEED TO ALTER above line to confirm it will pass in data. Also may need to use:
 					
@@ -129,7 +117,7 @@ public class WidgetConfig extends Activity {
 					setResult(RESULT_OK, cameraIntent);
 										
 					L.m("Line 112 Works"); //nope :(
-		*/
+		
 		
 		
 		//We want this to finish. Might be smart to include this when the button is clicked so that the user can choose when to end it
