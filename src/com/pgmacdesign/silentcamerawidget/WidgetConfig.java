@@ -96,6 +96,8 @@ public class WidgetConfig extends Activity {
 		Intent result = new Intent();
 		
 		//Updating the ID that is being called
+		result.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		result.putExtra(RecognizerIntent.EXTRA_RESULTS_PENDINGINTENT, pendingIntent0);
 		result.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, awID);
 		
 		//Confirm the result works then set it
