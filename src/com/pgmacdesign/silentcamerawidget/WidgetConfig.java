@@ -79,8 +79,8 @@ public class WidgetConfig extends Activity {
 		RemoteViews v1 = new RemoteViews(c.getPackageName(), R.layout.widget);
 
 		//This intent opens the takephoto class when clicked. Again, note C for context
-		Intent intent0 = new Intent(c, Splash.class); 
-		//Intent intent0 = new Intent(c, TakePhoto.class);  //This needs to be the primary line. Delete 82 and replace with this
+		//Intent intent0 = new Intent(c, Splash.class); 
+		Intent intent0 = new Intent(c, TakePhoto.class);  //This needs to be the primary line. Delete 82 and replace with this
 
 		
 		//A pending intent is also needed. Again, note the C for context
