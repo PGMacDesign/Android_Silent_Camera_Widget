@@ -79,8 +79,8 @@ public class WidgetConfig extends Activity {
 		RemoteViews v1 = new RemoteViews(c.getPackageName(), R.layout.widget);
 
 		//This intent opens the takephoto class when clicked. Again, note C for context
-		Intent intent0 = new Intent(c, Splash.class); //Removed from inner parameter parentheses: (c, TakePhoto.class)
-		//Intent intent_testing = new Intent(c, TakePhoto.class);
+		Intent intent0 = new Intent(c, Splash.class); 
+		//Intent intent0 = new Intent(c, TakePhoto.class);  //This needs to be the primary line. Delete 82 and replace with this
 
 		
 		//A pending intent is also needed. Again, note the C for context
@@ -99,6 +99,7 @@ public class WidgetConfig extends Activity {
 		result.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		result.putExtra(RecognizerIntent.EXTRA_RESULTS_PENDINGINTENT, pendingIntent0);
 		result.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, awID);
+		//Pass this into the activity
 		
 		//Confirm the result works then set it
 		setResult(RESULT_OK, result);
