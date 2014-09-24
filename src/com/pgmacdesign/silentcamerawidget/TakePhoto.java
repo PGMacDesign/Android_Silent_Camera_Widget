@@ -1,10 +1,12 @@
 package com.pgmacdesign.silentcamerawidget;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -24,6 +26,12 @@ public class TakePhoto extends Activity {
 
 	//This method calls other respective methods to take the photo
 	private void takeThePhotoPlease() {
+		
+	    Intent intent1 = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+	    intent1.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+	    intent1.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak When You Hear The Beep");
+	    intent1.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 10);
+		
 		checkIfCameraExists(); //Check first
 		L.m("Testing Line 28");
 		silenceTheWorld(); //Turn media sounds on silent so that the camera will make no noise
@@ -35,7 +43,7 @@ public class TakePhoto extends Activity {
 		
 	}
 
-	//Turn media sounds on silent so that the camera will make no noise
+	//Turns volume back up
 	private void restoreSound() {
 		
 	}
@@ -44,6 +52,7 @@ public class TakePhoto extends Activity {
 	private void actuallyActivateCamera() {
 	    camera.takePicture(null, null,
 		        new PhotoHandler(getApplicationContext())); //Calls the PhotoHandler class here
+	    L.m("Line 56... working?");
 	}
 
 	//Confirm front or back facing camera
@@ -64,9 +73,12 @@ public class TakePhoto extends Activity {
   		return cameraId;
   	}
   	
-	//Turns volume back up
+	
+  	//Turn media sounds on silent so that the camera will make no noise
 	private void silenceTheWorld() {
 		
+		//This silences the shutter sound
+		//enableShutterSound(boolean enabled);
 	}
 
 	//Checks to see if the camera exists on the phone
