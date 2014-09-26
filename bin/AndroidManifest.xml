@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <!-- This way, only devices that can take photos will be able to install it -->
     <uses-feature android:name="android.hardware.camera" />
+   	<uses-feature android:name="android.hardware.camera.autofocus" />
     <!-- To save the photos to the sd card or internal memory -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- For recording sound on the video record function -->    
