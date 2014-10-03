@@ -29,13 +29,13 @@ public class TakePhoto extends Activity {
 	    //Intent intent1 = new Intent();
 	    //startActivityForResult(intent1, 1);
 		L.m("Testing Line 31");
-		isCameraAvailiable(); //Initialize camera
+		cameraObject = isCameraAvailiable(); //Initialize camera
 		L.m("Testing Line 33");
 		setCameraResolution(); //Sets resolution to max on pictures
 		L.m("Testing Line 35");
 		silenceTheWorld(); //Turn media sounds on silent so that the camera will make no noise
 		L.m("Testing Line 37");
-		//actuallyActivateCamera(); //Actually take the photo
+		actuallyActivateCamera(); //Actually take the photo
 		L.m("Testing Line 39");
 		restoreSound(); //Turns volume back up
 		L.m("Testing Line 41");
@@ -45,18 +45,6 @@ public class TakePhoto extends Activity {
 	
 	//Activates everything
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		
-		
-		isCameraAvailiable(); //Initialize camera
-		L.m("Testing Line 46");
-		setCameraResolution(); //Sets resolution to max on pictures
-		L.m("Testing Line 48");
-		silenceTheWorld(); //Turn media sounds on silent so that the camera will make no noise
-		L.m("Testing Line 50");
-		actuallyActivateCamera(); //Actually take the photo
-		L.m("Testing Line 52");
-		restoreSound(); //Turns volume back up
-		L.m("Testing Line 54");
 		
 	}
 
@@ -114,7 +102,7 @@ public class TakePhoto extends Activity {
    		//Parameters object to get the parameters of the camera
    		Camera.Parameters params = cameraObject.getParameters();
    		
-   		/*
+   		
    		
    		//Check what resolutions are supported by your camera
 	   	List<Size> resolution_size_choices = params.getSupportedPictureSizes();
@@ -163,7 +151,7 @@ public class TakePhoto extends Activity {
    		L.m("Megapixels = " + megaPixels);
 	   	
    		
-   		*/
+   		
    	}
 
    	//onPause()
