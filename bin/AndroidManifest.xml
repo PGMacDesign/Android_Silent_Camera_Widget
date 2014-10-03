@@ -98,9 +98,20 @@
 		</activity>        
             
 		
+		<!-- This activity is for The Photo Handler-->
+        <activity       
+            android:name=".PhotoHandler"
+            android:label="Photo Handler"  >
+  
+        </activity>
 		
-		
-		
+				
+		<!-- This activity is for The Photo Handler-->
+        <activity       
+            android:name=".ShowCamera"
+            android:label="Show Camera"  >
+  
+        </activity>
         
         <!-- This activity is for -->
         <activity       
@@ -114,10 +125,16 @@
 	  	<activity
 		    android:name="com.pgmacdesign.silentcamerawidget.SecondActivity"
 		    android:label="@string/second_activity_title"
-		    android:parentActivityName="com.pgmacdesign.silentcamerawidget.MainActivity" >
-		    <meta-data
+		    android:parentActivityName="com.pgmacdesign.silentcamerawidget.MainActivity" 
+		    android:theme="@style/Transparent"
+		    >
+
+	  	    <!-- 		    
+	  	    <meta-data
 		      	android:name="android.support.PARENT_ACTIVITY"
-		      	android:value="com.example.actionbar.MainActivity" />
+		      	android:value="com.example.actionbar.MainActivity" /> 
+		      	
+		      	-->
 	  	</activity>
 		
 		

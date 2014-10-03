@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+            
+         <FrameLayout
+            android:id="@+id/camera_preview"
+            android:layout_width="1px"
+            android:layout_height="1px" />
+         <!-- IMPORTANT, The height and width of the preview window listed above are 1 pixel so that it won't be seen.
+         From research I cannot find a way to take a photo without a viewing window, which can be cumbersome -->
+         
+
+</LinearLayout>

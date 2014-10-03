@@ -1,15 +1,16 @@
 <resources>
 
-    <!--
-        Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-    -->
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         -->
+        
+       <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    	-->
     </style>
 
     <!-- Application theme. -->
@@ -26,6 +27,13 @@
 	    <item name="android:windowIsFloating">true</item>
 	    <item name="android:backgroundDimEnabled">false</item>
   	</style>
+	  	
+	<style name="Transparent">
+	    <item name="android:windowIsTranslucent">true</item>
+	    <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+	    <item name="android:colorForeground">#fff</item>
+	    <item name="android:windowBackground">@color/transparent</item>
+	    <item name="android:colorBackground">@color/transparent</item>
+	</style>    
 
-  
 </resources>
