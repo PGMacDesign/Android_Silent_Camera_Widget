@@ -1,6 +1,5 @@
 package com.pgmacdesign.silentcamerawidget;
 
-
 import java.io.IOException;
 
 import android.content.Context;
@@ -22,6 +21,11 @@ public class ShowCamera extends SurfaceView implements SurfaceHolder.Callback {
 
    @Override
    public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
+	      try   {
+	          theCamera.setPreviewDisplay(arg0);
+	          theCamera.startPreview(); 
+	       } catch (IOException e) {
+	       }
    }
 
    @Override

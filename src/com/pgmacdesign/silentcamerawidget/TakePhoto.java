@@ -1,6 +1,9 @@
 package com.pgmacdesign.silentcamerawidget;
 
 import java.util.List;
+  
+
+
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,32 +16,44 @@ import android.widget.FrameLayout;
 public class TakePhoto extends Activity {
 
 	  private int cameraId = 0;	
+	  private static final int IMAGE_CAPTURE = 102;
 	  private Camera cameraObject;
 	  private ShowCamera showCamera;
 	
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.second_activity);
-		L.m("Testing Line 23");
-	    takeThePhotoPlease(); 
+		///setContentView(R.layout.second_activity);
+		L.m("Testing Line 26");
+		sendRecognizeIntent();
+		/*
+		 
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);	    
+		startActivityForResult(intent, IMAGE_CAPTURE);
+		 
+		 */
+		
+		
+		cameraObject = isCameraAvailiable(); //Initialize camera
+		L.m("Testing Line 29");
+		setCameraResolution(); //Sets resolution to max on pictures
+		L.m("Testing Line 31");
+		
+		
+		
+		
+
+	}
+	
+	//Testing on 2014-10-11
+	private void sendRecognizeIntent() {
+
+		
 	}
 
 	//This method calls other respective methods to take the photo via the startActivityForResult()
 	private void takeThePhotoPlease() {
-	    //Intent intent1 = new Intent();
-	    //startActivityForResult(intent1, 1);
-		L.m("Testing Line 31");
-		cameraObject = isCameraAvailiable(); //Initialize camera
-		L.m("Testing Line 33");
-		setCameraResolution(); //Sets resolution to max on pictures
-		L.m("Testing Line 35");
-		silenceTheWorld(); //Turn media sounds on silent so that the camera will make no noise
-		L.m("Testing Line 37");
-		actuallyActivateCamera(); //Actually take the photo
-		L.m("Testing Line 39");
-		restoreSound(); //Turns volume back up
-		L.m("Testing Line 41");
+
 		
 		
 	}
@@ -174,4 +189,27 @@ public class TakePhoto extends Activity {
 		super.onDestroy();
 	}
 	
+	public void notWorkingCode(){
+		
+	    //Intent intent1 = new Intent();
+	    //startActivityForResult(intent1, 1);
+		L.m("Testing Line 45");
+		
+		L.m("Testing Line 47");
+		silenceTheWorld(); //Turn media sounds on silent so that the camera will make no noise
+		L.m("Testing Line 49");
+		actuallyActivateCamera(); //Actually take the photo
+		L.m("Testing Line 51");
+		restoreSound(); //Turns volume back up
+		L.m("Testing Line 53");
+		
+		showCamera = new ShowCamera(this, cameraObject);
+		L.m("Testing Line 33");
+		FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
+		L.m("Testing Line 35");
+		preview.addView(showCamera); ///////////////ERROR IS HERE
+		L.m("Testing Line 37");		
+		//takeThePhotoPlease(); 
+		
+	}
 }
