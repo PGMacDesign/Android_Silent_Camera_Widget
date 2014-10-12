@@ -1,46 +1,42 @@
 package com.pgmacdesign.silentcamerawidget;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
-  
-
-
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.hardware.Camera;
+import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
+import android.view.SurfaceView;
 import android.widget.FrameLayout;
 
 public class TakePhoto extends Activity {
 
 	  private int cameraId = 0;	
 	  private static final int IMAGE_CAPTURE = 102;
-	  private Camera cameraObject;
+	  private Camera cameraObject, myCamera;
 	  private ShowCamera showCamera;
 	
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		///setContentView(R.layout.second_activity);
-		L.m("Testing Line 26");
+		L.m("Testing Line 27");
 		sendRecognizeIntent();
-		/*
-		 
-		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);	    
-		startActivityForResult(intent, IMAGE_CAPTURE);
-		 
-		 */
 		
-		
-		cameraObject = isCameraAvailiable(); //Initialize camera
-		L.m("Testing Line 29");
-		setCameraResolution(); //Sets resolution to max on pictures
+		//cameraObject = isCameraAvailiable(); //Initialize camera
 		L.m("Testing Line 31");
+		//setCameraResolution(); //Sets resolution to max on pictures
+		L.m("Testing Line 36");
 		
-		
-		
+		takePictureNoPreview(this);
+		L.m("Testing line 39");
 		
 
 	}
@@ -48,6 +44,10 @@ public class TakePhoto extends Activity {
 	//Testing on 2014-10-11
 	private void sendRecognizeIntent() {
 
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		L.m("Testing Line 45");
+		startActivityForResult(intent, IMAGE_CAPTURE);
+		L.m("Testing Line 47");
 		
 	}
 
@@ -58,9 +58,72 @@ public class TakePhoto extends Activity {
 		
 	}
 	
+	public void takePictureNoPreview(Context context){
+		  // open back facing camera by default
+		myCamera = Camera.open();
+		
+		L.m("Line 65 working");
+		setCameraResolution();
+		L.m("Line 67 working");
+
+		if(myCamera!=null){
+			try{
+				//set camera parameters if you want to
+				//...
+
+				//here, the unused surface view and holder
+				SurfaceView dummy = new SurfaceView(context);
+				myCamera.setPreviewDisplay(dummy.getHolder());    
+				//myCamera.startPreview(); 
+		      
+				//myCamera.takePicture(null, null, pictureCallbackStuff());
+				myCamera.takePicture(null, null, new PhotoHandler(getApplicationContext()));
+		      
+		      
+			} catch (IOException e) {
+				//Error yo
+				e.printStackTrace();
+			}finally{
+		      myCamera.release();
+		    }      
+
+		}else{
+		    //booo, failed!
+		}
+	}
+
+	
+    //This is to handle the photos passed in
+	PictureCallback pictureCallbackStuff = new PictureCallback() {   
+		public void onPictureTaken(byte[] data, Camera camera) {
+			FileOutputStream fos;
+			try {
+				fos = new FileOutputStream("testPatricktest.jpeg");
+				fos.write(data);
+				fos.close();
+			}  catch (IOException e) {
+				//do something about it
+			}
+		}	
+	};
+	
+	
 	//Activates everything
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		
+		L.m("Testing Line 60");
+		if (requestCode == IMAGE_CAPTURE)
+			{
+				if (resultCode == RESULT_OK) {
+					L.m("result ok. Ok? Ok.");
+		            
+		            
+		          
+        		} else {
+		        	L.m("Result is not ok!");
+		        }
+		    } else {
+		    	L.m("Request Code is NOT OK!");
+		    }
 	}
 
 
