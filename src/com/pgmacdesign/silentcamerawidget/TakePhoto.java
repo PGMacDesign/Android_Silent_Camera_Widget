@@ -328,6 +328,22 @@ public class TakePhoto extends Activity implements SurfaceTextureListener {
 		
 	}
 
+	SurfaceHolder.Callback surfaceCallback=new SurfaceHolder.Callback() {
+		public void surfaceCreated(SurfaceHolder holder) {
+			// no-op -- wait until surfaceChanged()
+		}
+
+		public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+			initPreview(width, height);
+			startPreview();
+			preview.setVisibility(View.GONE);   //THIS IS WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		}
+
+		public void surfaceDestroyed(SurfaceHolder holder) {
+			// no-op
+		}
+	};
+	
 	//Setup the Camera
 	public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
 		
