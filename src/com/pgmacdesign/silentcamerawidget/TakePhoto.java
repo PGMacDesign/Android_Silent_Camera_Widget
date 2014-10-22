@@ -1,220 +1,257 @@
 package com.pgmacdesign.silentcamerawidget;
 
+import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.SurfaceTexture;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.hardware.Camera;
-import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.Size;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
-import android.provider.MediaStore;
-import android.view.Gravity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.TextureView;
 import android.view.View;
-import android.view.TextureView.SurfaceTextureListener;
-import android.widget.FrameLayout;
+import android.view.Window;
+import android.widget.Toast;
 
-public class TakePhoto extends Activity implements SurfaceTextureListener {
+public class TakePhoto extends Activity {
+	
+	private SurfaceView preview=null;
+	private SurfaceHolder previewHolder=null;
+	private Camera camera=null;
+	private boolean inPreview=false;
+	private boolean cameraConfigured=false;
+	
+	private final static String DEBUG_TAG = "PhotoHandler Activity";
 
-	private int cameraId = 0;	
-	private static final int IMAGE_CAPTURE = 102;
-	private Camera cameraObject, myCamera;
-	private ShowCamera showCamera;
-    	
-	private TextureView mTextureView;
+	Bitmap bmp, bmp2;
 	
-	
+
+
+	@SuppressWarnings("deprecation")
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		///setContentView(R.layout.second_activity);
 		
-		//Creating the texture view and setting it equal to the content view to handle the overlay
-		mTextureView = new TextureView(this);
-        mTextureView.setSurfaceTextureListener(this);
-        mTextureView.setVisibility(View.GONE); 
-        setContentView(mTextureView);
-        L.m("Line 41");
-        
-        cameraObject = isCameraAvailiable();
-        
-        L.m("Line 45");
+		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+	    getActionBar().hide();
+	    
+		setContentView(R.layout.main2);
+
+		preview = (SurfaceView)findViewById(R.id.preview);
+		previewHolder = preview.getHolder();
+		previewHolder.addCallback(surfaceCallback);
+		previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		
-        takeThePhotoPlease();
-		
-        
-        
-        
-        //L.m("Testing Line 27");
-		//sendRecognizeIntent();
-		
-		//cameraObject = isCameraAvailiable(); //Initialize camera
-		//L.m("Testing Line 31");
-		//setCameraResolution(); //Sets resolution to max on pictures
-		//L.m("Testing Line 36");
-		
-		//takePictureNoPreview(this);
-		//L.m("Testing line 39");
+		camera = Camera.open();
+
+
+	    
+		//Hides the action bar
+		//ActionBar actionBar = getActionBar();
+		//actionBar.hide();
+
+
+		//Popup a dialog after 6 seconds with option to start directions
+		Handler handler = new Handler(); 
+		handler.postDelayed(new Runnable() { 
+			 public void run() { 
+				 
+				 //
+				 finish();
+				 L.m("Finish called");
+				 //
+			 } 
+		}, (1000*6));
 		
 
 	}
-	
-	//Testing on 2014-10-11
-	private void sendRecognizeIntent() {
 
-		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		L.m("Testing Line 45");
-		startActivityForResult(intent, IMAGE_CAPTURE);
-		L.m("Testing Line 47");
-		
-	}
+	private void callWithoutClick(){
+		try {
+			L.m("Test 0");
+			camera.setPreviewDisplay(previewHolder);
+			Camera.Parameters parameters=camera.getParameters();
+			setCameraResolution();
+			camera.setParameters(parameters);
+			cameraConfigured=true;
+			camera.startPreview();
+			inPreview = true;
+			preview.setVisibility(View.GONE);
+			camera.takePicture(null, null, photoCallback);
+			L.m("Test 1");
+			inPreview=false;
 
-	//This method calls other respective methods to take the photo via the startActivityForResult()
-	private void takeThePhotoPlease() {
-
-		//Shut off the shutter sound
-		silenceTheWorld();
-		L.m("Line 81");
-		//Set the camera parameters (IE resolution)
-		setCameraResolution();
-		L.m("Line 84");
-		//Take the picture
-		actuallyActivateCamera();
-		L.m("Line 87");
-		//Restore the sound
-		restoreSound();
-		L.m("Line 90");
-	}
-	
-	public void takePictureNoPreview(Context context){
-		  // open back facing camera by default
-		myCamera = Camera.open();
-		
-		L.m("Line 65 working");
-		setCameraResolution();
-		L.m("Line 67 working");
-
-		if(myCamera!=null){
-			try{
-				//set camera parameters if you want to
-				//...
-
-				//here, the unused surface view and holder
-				SurfaceView dummy = new SurfaceView(context);
-				myCamera.setPreviewDisplay(dummy.getHolder());    
-				//myCamera.startPreview(); 
-		      
-				//myCamera.takePicture(null, null, pictureCallbackStuff());
-				myCamera.takePicture(null, null, new PhotoHandler(getApplicationContext()));
-		      
-		      
-			} catch (IOException e) {
-				//Error yo
-				e.printStackTrace();
-			}finally{
-		      myCamera.release();
-		    }      
-
-		}else{
-		    //booo, failed!
+		} catch (Exception e) {
+			L.m("Exception Error", e.toString());
+			Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
 		}
 	}
 
-	
-    //This is to handle the photos passed in
-	PictureCallback pictureCallbackStuff = new PictureCallback() {   
-		public void onPictureTaken(byte[] data, Camera camera) {
-			FileOutputStream fos;
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		new MenuInflater(this).inflate(R.menu.options, menu);
+
+		return(super.onCreateOptionsMenu(menu));
+	}
+
+	//This method is here in case I want to add a button in place for activation
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.camera) {
+			callWithoutClick();
+		}
+			
+		return(super.onOptionsItemSelected(item));
+	}
+
+	//Sets up the preview
+	private void initPreview() {
+		if (camera != null && previewHolder.getSurface() != null) {
 			try {
-				fos = new FileOutputStream("testPatricktest.jpeg");
-				fos.write(data);
-				fos.close();
-			}  catch (IOException e) {
-				//do something about it
+				camera.setPreviewDisplay(previewHolder);
 			}
-		}	
+			catch (Throwable t) {
+				Log.e("PreviewDemo-surfaceCallback", "Exception in setPreviewDisplay()", t);
+				Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+			}
+			
+			if (!cameraConfigured) {
+				Camera.Parameters parameters=camera.getParameters();
+				setCameraResolution();
+				
+				camera.setParameters(parameters);
+				cameraConfigured=true;
+			}
+		}
+	}
+	
+	//Starts the preview
+	private void startPreview() {
+		if (cameraConfigured && camera != null) {
+			camera.startPreview();
+  			inPreview=true;
+  		}
+  	}
+
+	//Surface holder to handle the surface management
+	SurfaceHolder.Callback surfaceCallback=new SurfaceHolder.Callback() {
+		public void surfaceCreated(SurfaceHolder holder) {
+			callWithoutClick(); //Calls the camera to take action
+		}
+
+		public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+			initPreview();
+			startPreview();
+			preview.setVisibility(View.GONE);   //This hides the view from the user
+		}
+
+		public void surfaceDestroyed(SurfaceHolder holder) {
+			
+		}
 	};
+
+	//PhotoCallback to handle the picture callback
+	Camera.PictureCallback photoCallback = new Camera.PictureCallback() {
+		public void onPictureTaken(byte[] data, Camera camera) {
+			File pictureFileDir = getDir();
+
+			//If there is a problem with the image...
+			if (!pictureFileDir.exists() && !pictureFileDir.mkdirs()) {
 	
+				Log.d(DEBUG_TAG, "Can't create directory to save image.");
+				Toast.makeText(getApplicationContext(), "Can't create directory to save image.",
+						Toast.LENGTH_LONG).show();
+				return;
+			}
+	    
+			//Get the date and make a string out of it
+			String date = new SimpleDateFormat("yyyy_MM_dd_HHmmss").format(new Date());
+			
+			//Make a string with the file name and include the date
+			String photoFile = "Silent Camera " + date + ".jpg";
+			
+			//Add the file name to the directory path 
+			String filename = pictureFileDir.getPath() + File.separator + photoFile;
+			
+			//Input the filename into the actual file
+			File pictureFile = new File(filename);
+			
+			//Convert the file into a bitmap for orientation 
+			bmp  = BitmapFactory.decodeByteArray(data, 0, data.length);
+				
+			//Need to rotate the image. For whatever reason... 
+			bmp = rotateImage(bmp, 90);
+			
+			//Write the data to external source
+			try {
+				//Create a new file output stream
+				FileOutputStream fos = new FileOutputStream(pictureFile);
+				
+				/*
+				 * Compress the bitmap into a jpeg and then write it via the fos object
+				 * @Params: 
+				 * 1) Format to compress to (IE JPEG)
+				 * 2) Quality. 0 being VERY low quality and 100 being highest quality
+				 * 3) The File output stream being used to write the data
+				 */
+				bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+				//Flush the stream
+				fos.flush();
+				//Close the stream
+				fos.close();		
 	
-	//Activates everything
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		L.m("Testing Line 60");
-		if (requestCode == IMAGE_CAPTURE)
-			{
-				if (resultCode == RESULT_OK) {
-					L.m("result ok. Ok? Ok.");
-		            
-		            
-		          
-        		} else {
-		        	L.m("Result is not ok!");
-		        }
-		    } else {
-		    	L.m("Request Code is NOT OK!");
+				//Confirm it worked
+				Toast.makeText(getApplicationContext(), "New Image saved: " + photoFile, Toast.LENGTH_LONG).show();
+				
+				L.m("New Image Saved: " + photoFile);
+				
+			} catch (Exception error) {
+				
+				Log.d(DEBUG_TAG, "File" + filename + "not saved: " + error.getMessage());
+				Toast.makeText(getApplicationContext(), "Image could not be saved.", Toast.LENGTH_LONG).show();
 		    }
-	}
+		}
+	};
 
-
-	//Actually take the photo
-	private void actuallyActivateCamera() {
-	    
-		//Preview window
-	    //showCamera = new ShowCamera(this, cameraObject);
-	    //FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
-	    //preview.addView(showCamera);
-	    
-   		//Take the photo!
-		L.m("Camera - Line 171");
-   		cameraObject.takePicture(null, null, new PhotoHandler(getApplicationContext()));
-   		L.m("Camera - Line 173");
-   		
-
-   		//Popup a dialog after 3 seconds to release the camera
-   		Handler handler = new Handler(); 
-   		handler.postDelayed(new Runnable() { 
- 	        public void run() { 
-
-	 	   		//finish(); //Removed for now
- 	        } 
- 	    }, (1000*5));
-   		
-   		
-	}
-  	
-	
-  	//Turn media sounds on silent so that the camera will make no noise
-	private void silenceTheWorld() {
-		
-		//This silences the shutter sound
-		//enableShutterSound(boolean enabled);
-	}
-
-	//Turns volume back up
-	private void restoreSound() {
-		
+	private File getDir() {
+		//Locates the directory
+		//File sdDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+		File toDCIM = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+		//Returns the file in the directory 
+	    return new File(toDCIM, "Silent Camera");
 	}
 	
-	//Initializes the camera object
-   	public static Camera isCameraAvailiable(){
-   		Camera object = null;
-      	try {
-    	  object = Camera.open();
-         	L.m("Camera Open");
-      	} catch (Exception e) {
-    	  L.m(e.toString());
-      	} return object; 
-   	}
+	//For rotating photo to the correct side
+	public static Bitmap rotateImage(Bitmap b, int degrees) {
+
+		if (degrees != 0 && b != null) {
+			Matrix m = new Matrix();
+		    m.setRotate(degrees, (float) b.getWidth() / 2, (float) b.getHeight() / 2);
+		    Bitmap b2 = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), m, true);
+		    if (b != b2) {
+		    	b.recycle();
+		        b = b2;
+		    }
+		}
+		return b;
+	}
 	
 	//Sets the resolution on the photo to be the highest possible resolution
    	private void setCameraResolution() {
    		
    		//Parameters object to get the parameters of the camera
-   		Camera.Parameters params = cameraObject.getParameters();
+   		Camera.Parameters params = camera.getParameters();
    		
    		
    		
@@ -253,7 +290,7 @@ public class TakePhoto extends Activity implements SurfaceTextureListener {
 	   	
 	   	//Set the parameters to match the highest Megapixel available
 	   	params.setPictureSize(highest_width, highest_height);
-	   	cameraObject.setParameters(params);   		
+	   	camera.setParameters(params);   		
 	   	
 	   	//Log the Megapixels from the results of the loop
    		//Gets the resolution (Height x Width)
@@ -262,119 +299,34 @@ public class TakePhoto extends Activity implements SurfaceTextureListener {
    		int megaPixels = aResolution / 1024000;
    		//Log it
    		L.m("Resolution = " + aResolution);
-   		L.m("Megapixels = " + megaPixels);
-	   	
-   		
-   		
+   		L.m("Megapixels = " + megaPixels);	
    	}
+   	
+   	
 
-	//onResume
+	@Override
 	public void onResume() {
 		super.onResume();
 
-		if (cameraObject == null) {
-			cameraObject=Camera.open();
+		if (camera == null) {
+			//camera = Camera.open();
 			L.m("Camera open in onResume");
 		}
-
-		//startPreview(); Need to add this in 
+		startPreview();
 	}
-	
-   	//onPause()
-	protected void onPause() {
-		if (cameraObject != null) {
-			cameraObject.release();
-			cameraObject = null;
-			L.m("Camera has been released (onPause)");
-			//cameraObject.stopPreview();
-			//L.m("Preview has been released (onPause)");
+
+	@Override
+	public void onPause() {
+		if (inPreview) {
+			camera.stopPreview();
 		}
+
+		camera.release();
+		camera=null;
+		inPreview=false;
+
 		super.onPause();
 	}
+
 	
-	//onDestroy()
-	protected void onDestroy(){
-		if (cameraObject != null) {
-			cameraObject.release();
-			cameraObject = null;
-			L.m("Camera has been released (onDestroy)");
-			//cameraObject.stopPreview();
-			//L.m("Preview has been released (onDestroy)");
-		}
-		super.onDestroy();
-	}
-	
-	public void notWorkingCode(){
-		
-	    //Intent intent1 = new Intent();
-	    //startActivityForResult(intent1, 1);
-		L.m("Testing Line 45");
-		
-		L.m("Testing Line 47");
-		silenceTheWorld(); //Turn media sounds on silent so that the camera will make no noise
-		L.m("Testing Line 49");
-		actuallyActivateCamera(); //Actually take the photo
-		L.m("Testing Line 51");
-		restoreSound(); //Turns volume back up
-		L.m("Testing Line 53");
-		
-		showCamera = new ShowCamera(this, cameraObject);
-		L.m("Testing Line 33");
-		FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
-		L.m("Testing Line 35");
-		preview.addView(showCamera); ///////////////ERROR IS HERE
-		L.m("Testing Line 37");		
-		//takeThePhotoPlease(); 
-		
-	}
-
-	SurfaceHolder.Callback surfaceCallback=new SurfaceHolder.Callback() {
-		public void surfaceCreated(SurfaceHolder holder) {
-			// no-op -- wait until surfaceChanged()
-		}
-
-		public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-			initPreview(width, height);
-			startPreview();
-			preview.setVisibility(View.GONE);   //THIS IS WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		}
-
-		public void surfaceDestroyed(SurfaceHolder holder) {
-			// no-op
-		}
-	};
-	
-	//Setup the Camera
-	public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-		
-		//cameraObject = Camera.open();
-
-        Camera.Size previewSize = cameraObject.getParameters().getPreviewSize();
-        mTextureView.setLayoutParams(new FrameLayout.LayoutParams(
-                previewSize.width, previewSize.height, Gravity.CENTER));
-
-        try {
-        	cameraObject.setPreviewTexture(surface);
-        } catch (IOException t) {
-        }
-
-        cameraObject.startPreview();
-	}
-
-	//Android camera will handle this method
-	public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-		//IGNORE THIS METHOD, must be included as it is implemented, but can be ignored as the camera handles it
-	}
-
-	//Destroy camera objects
-	public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-		//cameraObject.stopPreview();
-		//cameraObject.release();
-        return true;
-	}
-
-	//Update texture here when there is something to change
-	public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-		//Update the view if need be here
-	}
 }

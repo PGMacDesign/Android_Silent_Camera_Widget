@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 
 public class Splash extends Activity {
@@ -48,14 +49,32 @@ MediaPlayer ourIntroSong, doorClose; //Doorclose not used at this point, will se
 					String error_in_splash = e01.toString(); //For Debugging purposes
 					e01.printStackTrace();
 				} finally {
-					Intent openMain = new Intent(Splash.this, SecondActivity.class);
-					startActivity(openMain);
+
+					
+					//Testing this instead of a popup window
+					//Intent openMain = new Intent(Splash.this, SecondActivity.class);
+					//startActivity(openMain);
 				}
 			}
 		};
 
 		timer.start();
 		
+		callFinishAfter(3);
+	}
+	
+	public void callFinishAfter(int seconds){
+		L.m("Seconds total: " + 1000*seconds);
+		Handler handler = new Handler(); 
+		handler.postDelayed(new Runnable() { 
+			 public void run() { 
+				 
+				 //
+				 finish();
+				 L.m("Finish called");
+				 //
+			 } 
+		}, (1000*seconds));
 	}
 
 	@Override

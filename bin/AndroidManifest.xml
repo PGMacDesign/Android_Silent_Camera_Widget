@@ -57,7 +57,7 @@
         <activity
             android:name=".TakePhoto"
             android:label="@string/app_name" 
-            android:uiOptions="splitActionBarWhenNarrow"
+            android:theme="@style/Transparent"
             >
             <!-- The (android:uiOptions="splitActionBarWhenNarrow") is used to move the options bar to the bottom of the screen if there is limited room 
             Reference: http://www.sitepoint.com/better-user-interfaces-android-action-bar/ 
