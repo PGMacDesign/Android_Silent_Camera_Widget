@@ -6,11 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Rect;
 import android.hardware.Camera;
 import android.hardware.Camera.Size;
 import android.os.Bundle;
@@ -81,6 +81,7 @@ public class TakePhoto extends Activity {
 	private void callWithoutClick(){
 		try {
 			L.m("Test 0");
+			
 			camera.setPreviewDisplay(previewHolder);
 			Camera.Parameters parameters=camera.getParameters();
 			setCameraResolution();
@@ -89,10 +90,37 @@ public class TakePhoto extends Activity {
 			camera.startPreview();
 			inPreview = true;
 			preview.setVisibility(View.GONE);
+			
+			/*
+			//Focus via the auto-focus and then take the photo
+			if (getAutoFocusStatus()){
+			    camera.autoFocus(new AutoFocusCallback() {
+			        @Override
+			        public void onAutoFocus(boolean success, Camera camera) {
+			           if(success){
+			        	   
+			   			camera.takePicture(null, null, photoCallback);
+						L.m("Test 1");
+						inPreview=false;
+			           }
+			        }
+			    }); 
+			}else{
+				camera.takePicture(null, null, photoCallback);
+				L.m("Test 1");
+				inPreview=false;
+			}
+			*/
+			
+
+			/*
+
+			 */
+
 			camera.takePicture(null, null, photoCallback);
 			L.m("Test 1");
 			inPreview=false;
-
+			
 		} catch (Exception e) {
 			L.m("Exception Error", e.toString());
 			Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
@@ -289,7 +317,12 @@ public class TakePhoto extends Activity {
    		}
 	   	
 	   	//Set the parameters to match the highest Megapixel available
-	   	params.setPictureSize(highest_width, highest_height);
+	   	params.setPictureSize(highest_width, highest_height);	   	
+	   	
+	   	//Set auto focus
+	   	params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+	   	
+	   	//Set the parameters in place
 	   	camera.setParameters(params);   		
 	   	
 	   	//Log the Megapixels from the results of the loop
@@ -302,7 +335,6 @@ public class TakePhoto extends Activity {
    		L.m("Megapixels = " + megaPixels);	
    	}
    	
-   	
 
 	@Override
 	public void onResume() {
@@ -312,7 +344,7 @@ public class TakePhoto extends Activity {
 			//camera = Camera.open();
 			L.m("Camera open in onResume");
 		}
-		startPreview();
+//		startPreview();
 	}
 
 	@Override
