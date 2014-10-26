@@ -63,18 +63,6 @@ public class TakePhoto extends Activity {
 		//actionBar.hide();
 
 
-		//Popup a dialog after 6 seconds with option to start directions
-		Handler handler = new Handler(); 
-		handler.postDelayed(new Runnable() { 
-			 public void run() { 
-				 
-				 //
-				 finish();
-				 L.m("Finish called");
-				 //
-			 } 
-		}, (1000*6));
-		
 
 	}
 
@@ -119,11 +107,17 @@ public class TakePhoto extends Activity {
 
 			camera.takePicture(null, null, photoCallback);
 			L.m("Test 1");
-			inPreview=false;
+			//inPreview=false;
 			
 		} catch (Exception e) {
 			L.m("Exception Error", e.toString());
 			Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+		}
+		
+		try{
+			inPreview=false;
+		} catch (Exception e){
+			L.m("Exception Error", e.toString());
 		}
 	}
 
@@ -244,10 +238,15 @@ public class TakePhoto extends Activity {
 				
 				L.m("New Image Saved: " + photoFile);
 				
+				//Finish after 1 second
+				callFinishAfter(1);
+				
+				
 			} catch (Exception error) {
 				
 				Log.d(DEBUG_TAG, "File" + filename + "not saved: " + error.getMessage());
 				Toast.makeText(getApplicationContext(), "Image could not be saved.", Toast.LENGTH_LONG).show();
+				callFinishAfter(1);
 		    }
 		}
 	};
@@ -336,6 +335,19 @@ public class TakePhoto extends Activity {
    	}
    	
 
+   	//Method for finishing (closing) the app depending on circumstances
+   	public void callFinishAfter(int seconds){
+   		L.m("Seconds total: " + 1000*seconds);
+   		Handler handler = new Handler(); 
+   		handler.postDelayed(new Runnable() { 
+   			 public void run() { 
+
+   				 finish();
+   				 L.m("Finish called"); 
+   			 } 
+   		}, (1000*seconds));
+   	}
+   	
 	@Override
 	public void onResume() {
 		super.onResume();
