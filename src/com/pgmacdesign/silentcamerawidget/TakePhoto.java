@@ -107,18 +107,15 @@ public class TakePhoto extends Activity {
 
 			camera.takePicture(null, null, photoCallback);
 			L.m("Test 1");
-			//inPreview=false;
+			inPreview=false;
+			
+			callFinishAfter(6);
 			
 		} catch (Exception e) {
 			L.m("Exception Error", e.toString());
 			Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
 		}
 		
-		try{
-			inPreview=false;
-		} catch (Exception e){
-			L.m("Exception Error", e.toString());
-		}
 	}
 
 	@Override
